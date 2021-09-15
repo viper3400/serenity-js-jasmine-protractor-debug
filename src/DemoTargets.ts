@@ -3,8 +3,6 @@ import { Question } from '@serenity-js/core';
 import { Target, Text } from '@serenity-js/protractor';
 import { by, ElementFinder } from 'protractor';
 
-import { MenuLinks } from '.';
-
 export class DemoTargets {
     meritsSection = Target.the('merits section').located(
         by.css('section#merits')
@@ -19,11 +17,14 @@ export class DemoTargets {
         this.links.where(Text, includes(linkText)).first();
 
     handbookLink = this.links.where(Text, includes('Handbook')).first();
+    moduleLink = this.links.where(Text, includes('Module')).first();
 
-    LinkSwitcher(linkType: MenuLinks): Question<ElementFinder> {
+    LinkSwitcher(linkType: string): Question<ElementFinder> {
         switch (linkType) {
-            case MenuLinks.Handbook:
+            case 'Handbook':
                 return this.handbookLink;
+            case 'Module':
+                return this.moduleLink;
             // ....
         }
     }
