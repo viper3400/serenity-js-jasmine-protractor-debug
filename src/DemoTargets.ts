@@ -20,6 +20,7 @@ export class DemoTargets {
     moduleLink = this.links.where(Text, includes('Module')).first();
 
     LinkSwitcher(linkType: string): Question<ElementFinder> {
+        console.log(linkType);
         switch (linkType) {
             case 'Handbook':
                 return this.handbookLink;
@@ -28,4 +29,17 @@ export class DemoTargets {
             // ....
         }
     }
+
+    LinkTo = (
+        menuSection: Question<string>
+    ): Question<Question<ElementFinder>> =>
+        Question.about(`link to ${menuSection}`, (actor) => {
+            const sectionName = menuSection.answeredBy(actor);
+            switch (sectionName) {
+                case 'Handbook':
+                    return this.handbookLink;
+                case 'Module':
+                    return this.moduleLink;
+            }
+        });
 }

@@ -1,7 +1,13 @@
 import 'jasmine';
 
 import { Ensure, includes } from '@serenity-js/assertions';
-import { actorCalled, engage, Log, Loop } from '@serenity-js/core';
+import {
+    actorCalled,
+    actorInTheSpotlight,
+    engage,
+    Log,
+    Loop,
+} from '@serenity-js/core';
 import {
     Click,
     Navigate,
@@ -63,7 +69,11 @@ describe('serenity-js.org website', () => {
             ),
             Loop.over(testDataObject.menuLinks).to(
                 Log.the(Loop.item<string>()),
-                Click.on(targets.LinkSwitcher(Loop.item<string>()))
+                Click.on(
+                    targets
+                        .LinkTo(Loop.item<string>())
+                        .answeredBy(actorInTheSpotlight())
+                )
             )
         ));
 });
